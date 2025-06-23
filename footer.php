@@ -1,43 +1,71 @@
 
-<footer class="site-footer">
+<footer class="site-footer" role="contentinfo">
     <div class="container">
         <div class="footer-content">
             <div class="footer-section">
-                <h4>Viziblix</h4>
-                <p>Votre agence digitale de confiance pour transformer votre présence en ligne et générer des résultats concrets.</p>
+                <h4>Viziblix Enhanced</h4>
+                <p>Votre agence digitale de confiance pour transformer votre présence en ligne et générer des résultats concrets avec les dernières technologies.</p>
                 <div style="margin-top: 1rem;">
-                    <a href="https://wa.me/+33123456789" style="margin-right: 1rem;">📱 WhatsApp</a>
-                    <a href="mailto:contact@viziblix.com">✉️ Email</a>
+                    <a href="https://wa.me/<?php echo esc_attr(str_replace(array(' ', '-', '(', ')'), '', get_theme_mod('whatsapp_number', '+33123456789'))); ?>" 
+                       style="margin-right: 1rem; color: inherit; text-decoration: none;" 
+                       target="_blank" 
+                       rel="noopener"
+                       aria-label="Nous contacter sur WhatsApp">
+                        <span aria-hidden="true">📱</span> WhatsApp
+                    </a>
+                    <a href="mailto:<?php echo esc_attr(get_theme_mod('contact_email', 'contact@viziblix.com')); ?>" 
+                       style="color: inherit; text-decoration: none;"
+                       aria-label="Nous envoyer un email">
+                        <span aria-hidden="true">✉️</span> Email
+                    </a>
                 </div>
             </div>
             
             <div class="footer-section">
                 <h4>Nos Services</h4>
-                <ul style="list-style: none;">
-                    <li><a href="#qui-aidons-nous">Création de Sites Web</a></li>
-                    <li><a href="#nos-3-phases">Marketing Digital</a></li>
-                    <li><a href="#audit-gratuit">Audit Gratuit</a></li>
-                    <li><a href="#nos-3-phases">SEO & Référencement</a></li>
-                    <li><a href="#nos-3-phases">Réseaux Sociaux</a></li>
-                </ul>
+                <nav aria-label="Menu des services">
+                    <ul style="list-style: none; margin: 0; padding: 0;">
+                        <li><a href="#qui-aidons-nous">Création de Sites Web</a></li>
+                        <li><a href="#nos-3-phases">Marketing Digital</a></li>
+                        <li><a href="#audit-gratuit">Audit Gratuit</a></li>
+                        <li><a href="#nos-3-phases">SEO & Référencement</a></li>
+                        <li><a href="#nos-3-phases">Réseaux Sociaux</a></li>
+                        <li><a href="#temoignages">Témoignages Clients</a></li>
+                    </ul>
+                </nav>
             </div>
             
             <div class="footer-section">
                 <h4>Liens Utiles</h4>
-                <ul style="list-style: none;">
-                    <li><a href="#a-propos">À Propos</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="/mentions-legales">Mentions Légales</a></li>
-                    <li><a href="/politique-confidentialite">Politique de Confidentialité</a></li>
-                </ul>
+                <nav aria-label="Menu des liens utiles">
+                    <ul style="list-style: none; margin: 0; padding: 0;">
+                        <li><a href="#a-propos">À Propos</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="<?php echo esc_url(home_url('/mentions-legales')); ?>">Mentions Légales</a></li>
+                        <li><a href="<?php echo esc_url(home_url('/politique-confidentialite')); ?>">Politique de Confidentialité</a></li>
+                        <li><a href="<?php echo esc_url(home_url('/plan-du-site')); ?>">Plan du Site</a></li>
+                    </ul>
+                </nav>
             </div>
             
             <div class="footer-section">
                 <h4>Contactez-Nous</h4>
-                <p>📧 contact@viziblix.com</p>
-                <p>📱 +33 1 23 45 67 89</p>
-                <p>📍 Paris, France</p>
+                <address style="font-style: normal;">
+                    <p>
+                        <span aria-hidden="true">📧</span> 
+                        <a href="mailto:<?php echo esc_attr(get_theme_mod('contact_email', 'contact@viziblix.com')); ?>">
+                            <?php echo esc_html(get_theme_mod('contact_email', 'contact@viziblix.com')); ?>
+                        </a>
+                    </p>
+                    <p>
+                        <span aria-hidden="true">📱</span> 
+                        <a href="tel:<?php echo esc_attr(str_replace(array(' ', '-', '(', ')'), '', get_theme_mod('whatsapp_number', '+33123456789'))); ?>">
+                            <?php echo esc_html(get_theme_mod('whatsapp_number', '+33 1 23 45 67 89')); ?>
+                        </a>
+                    </p>
+                    <p><span aria-hidden="true">📍</span> Paris, France</p>
+                </address>
                 <div style="margin-top: 1rem;">
                     <a href="#audit-gratuit" class="btn btn-primary">Audit Gratuit</a>
                 </div>
@@ -45,132 +73,89 @@
         </div>
         
         <div class="footer-bottom">
-            <p>&copy; <?php echo date('Y'); ?> Viziblix. Tous droits réservés. | Agence Digitale Spécialisée</p>
+            <p>&copy; <?php echo date('Y'); ?> Viziblix Enhanced. <?php _e('Tous droits réservés.', 'viziblix-enhanced'); ?> | <?php _e('Agence Digitale Spécialisée', 'viziblix-enhanced'); ?></p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
+                <?php _e('Thème WordPress professionnel avec accessibilité et performance optimisées', 'viziblix-enhanced'); ?>
+            </p>
         </div>
     </div>
 </footer>
 
 <?php wp_footer(); ?>
 
+<!-- No-JS fallback styles -->
+<noscript>
+    <style>
+        .faq-answer { max-height: none !important; display: block !important; }
+        .testimonials-slider { overflow: visible; }
+        .testimonials-track { display: block; }
+        .testimonial-slide { min-width: auto; margin-bottom: 2rem; }
+        .slider-nav { display: none; }
+        .mobile-menu-toggle { display: none; }
+        .main-nav { display: block !important; }
+        .back-to-top { display: none !important; }
+    </style>
+</noscript>
+
+<!-- Enhanced performance and accessibility scripts -->
 <script>
-// Mobile Menu Toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-    const mainNav = document.getElementById('main-nav');
-    
-    if (mobileMenuToggle && mainNav) {
-        mobileMenuToggle.addEventListener('click', function() {
-            mainNav.classList.toggle('active');
-            this.textContent = mainNav.classList.contains('active') ? '✕' : '☰';
-        });
-    }
-    
-    // FAQ Accordion
-    const faqQuestions = document.querySelectorAll('.faq-question');
-    faqQuestions.forEach(question => {
-        question.addEventListener('click', function() {
-            const answer = this.nextElementSibling;
-            const icon = this.querySelector('span');
-            
-            // Close all other answers
-            faqQuestions.forEach(otherQuestion => {
-                if (otherQuestion !== this) {
-                    const otherAnswer = otherQuestion.nextElementSibling;
-                    const otherIcon = otherQuestion.querySelector('span');
-                    otherAnswer.classList.remove('active');
-                    otherIcon.textContent = '+';
-                }
-            });
-            
-            // Toggle current answer
-            answer.classList.toggle('active');
-            icon.textContent = answer.classList.contains('active') ? '−' : '+';
-        });
+// Immediate font loading optimization
+if ('fonts' in document) {
+    document.fonts.load('400 16px Inter').then(() => {
+        document.body.classList.add('fonts-loaded');
     });
-    
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                const offsetTop = target.offsetTop - 80; // Account for fixed header
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
+}
+
+// Immediate critical performance improvements
+(function() {
+    // Reduce layout shifts
+    if (window.requestIdleCallback) {
+        requestIdleCallback(function() {
+            // Lazy load non-critical images
+            const images = document.querySelectorAll('img[data-src]');
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                            imageObserver.unobserve(img);
+                        }
+                    });
                 });
-                
-                // Close mobile menu if open
-                if (mainNav && mainNav.classList.contains('active')) {
-                    mainNav.classList.remove('active');
-                    mobileMenuToggle.textContent = '☰';
-                }
-            }
-        });
-    });
-    
-    // Form submission handling
-    const auditForm = document.getElementById('audit-form');
-    if (auditForm) {
-        auditForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Basic form validation
-            const requiredFields = this.querySelectorAll('[required]');
-            let isValid = true;
-            
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    isValid = false;
-                    field.style.borderColor = '#dc3545';
-                } else {
-                    field.style.borderColor = '#f36f21';
-                }
-            });
-            
-            if (isValid) {
-                // Show success message
-                const button = this.querySelector('button[type="submit"]');
-                const originalText = button.textContent;
-                button.textContent = 'Envoi en cours...';
-                button.disabled = true;
-                
-                // Simulate form submission
-                setTimeout(() => {
-                    alert('Merci ! Votre demande d\'audit a été envoyée. Nous vous contactons sous 24h.');
-                    this.reset();
-                    button.textContent = originalText;
-                    button.disabled = false;
-                }, 1000);
-            } else {
-                alert('Veuillez remplir tous les champs obligatoires.');
+                images.forEach(img => imageObserver.observe(img));
             }
         });
     }
     
-    // Fade in animation on scroll
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-    
-    // Apply animation to cards
-    document.querySelectorAll('.card, .pricing-card').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
+    // Preload critical resources
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.href = '<?php echo get_template_directory_uri(); ?>/js/theme.js';
+    link.as = 'script';
+    document.head.appendChild(link);
+})();
+
+// Enhanced error handling
+window.addEventListener('error', function(e) {
+    console.warn('Viziblix Enhanced: JavaScript error caught:', e.error);
+    // Could send to analytics or error tracking service
 });
+
+// Performance monitoring
+if ('performance' in window && 'measure' in window.performance) {
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            const perfData = performance.getEntriesByType('navigation')[0];
+            console.log('Viziblix Enhanced Performance:', {
+                domContentLoaded: perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart,
+                load: perfData.loadEventEnd - perfData.loadEventStart,
+                firstPaint: performance.getEntriesByType('paint')[0]?.startTime || 'N/A'
+            });
+        }, 0);
+    });
+}
 </script>
 
 </body>
