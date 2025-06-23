@@ -1,0 +1,252 @@
+
+/**
+ * Elementor Compatibility Styles
+ * Ensures smooth integration between theme styles and Elementor
+ */
+
+/* Elementor Canvas Page */
+.elementor-page {
+    margin: 0;
+    padding: 0;
+}
+
+/* Remove theme margins/padding for full-width Elementor sections */
+.elementor-section-wrap {
+    margin: 0;
+    padding: 0;
+}
+
+/* Ensure Elementor widgets inherit theme typography */
+.elementor-widget-text-editor {
+    font-family: inherit;
+    line-height: inherit;
+}
+
+/* Custom Widget Styles */
+.elementor-hero {
+    background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+    color: #fff;
+    padding: 140px 0 80px;
+    text-align: center;
+    min-height: 60vh;
+}
+
+.elementor-hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.elementor-hero .subtitle {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: #f36f21;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.elementor-services .cards-grid,
+.elementor-contact .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.elementor-pricing .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.elementor-faq .faq-item {
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 0;
+}
+
+.elementor-testimonials .testimonials-slider {
+    position: relative;
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Ensure buttons work properly in Elementor */
+.elementor-widget .btn {
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.elementor-widget .btn-primary {
+    background: #f36f21;
+    color: #fff;
+}
+
+.elementor-widget .btn-primary:hover {
+    background: #e55a0f;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(243, 111, 33, 0.4);
+}
+
+.elementor-widget .btn-secondary {
+    background: transparent;
+    color: #f36f21;
+    border: 2px solid #f36f21;
+}
+
+.elementor-widget .btn-secondary:hover {
+    background: #f36f21;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Form Styles for Elementor */
+.elementor-contact .form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.elementor-contact .form-group {
+    margin-bottom: 2rem;
+}
+
+.elementor-contact .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.elementor-contact .form-control {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e5e5e5;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background: #fff;
+}
+
+.elementor-contact .form-control:focus {
+    outline: none;
+    border-color: #f36f21;
+    box-shadow: 0 0 0 3px rgba(243, 111, 33, 0.1);
+}
+
+/* Responsive adjustments for Elementor */
+@media (max-width: 768px) {
+    .elementor-hero {
+        padding: 100px 0 60px;
+    }
+    
+    .elementor-services .cards-grid,
+    .elementor-pricing .pricing-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .elementor-contact .form-container {
+        padding: 2rem 1rem;
+        margin: 0 1rem;
+    }
+}
+
+/* Elementor Editor Compatibility */
+.elementor-editor-active .elementor-hero {
+    min-height: auto;
+}
+
+/* Override theme styles that might conflict with Elementor */
+.elementor-section .container {
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.elementor-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Ensure proper spacing in Elementor sections */
+.elementor-element {
+    position: relative;
+}
+
+/* Fix for Elementor button widget */
+.elementor-button-wrapper .elementor-button {
+    font-family: inherit;
+}
+
+/* Testimonials slider for Elementor */
+.elementor-testimonials .testimonials-track {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.elementor-testimonials .testimonial-slide {
+    min-width: 100%;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+.elementor-testimonials .testimonial-content {
+    font-size: 1.2rem;
+    font-style: italic;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.elementor-testimonials .testimonial-author {
+    font-weight: 700;
+    color: #f36f21;
+    margin-bottom: 0.5rem;
+}
+
+.elementor-testimonials .testimonial-company {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.elementor-testimonials .slider-nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.elementor-testimonials .slider-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    background: #ddd;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.elementor-testimonials .slider-dot.active,
+.elementor-testimonials .slider-dot:hover {
+    background: #f36f21;
+}

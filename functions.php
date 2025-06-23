@@ -1,8 +1,7 @@
-
 <?php
 /**
- * Viziblix Enhanced Theme Functions
- * Version: 2.0.0
+ * Viziblix Enhanced Theme Functions - Elementor Compatible
+ * Version: 3.0.0
  */
 
 // Prevent direct access
@@ -10,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// Theme Setup
+// Theme Setup with Elementor Support
 function viziblix_enhanced_setup() {
     // Add theme support for various features
     add_theme_support('title-tag');
@@ -28,6 +27,11 @@ function viziblix_enhanced_setup() {
     add_theme_support('wp-block-styles');
     add_theme_support('align-wide');
     
+    // Elementor Support
+    add_theme_support('elementor');
+    add_theme_support('elementor-canvas');
+    add_theme_support('elementor-full-width');
+    
     // Add editor styles
     add_theme_support('editor-styles');
     add_editor_style('style.css');
@@ -42,6 +46,45 @@ function viziblix_enhanced_setup() {
     $GLOBALS['content_width'] = 1200;
 }
 add_action('after_setup_theme', 'viziblix_enhanced_setup');
+
+// Elementor Integration
+function viziblix_elementor_init() {
+    // Check if Elementor is active
+    if (!did_action('elementor/loaded')) {
+        return;
+    }
+    
+    // Include custom widgets
+    require_once get_template_directory() . '/elementor-widgets/class-viziblix-elementor-widgets.php';
+    
+    // Register custom widgets
+    add_action('elementor/widgets/widgets_registered', 'viziblix_register_elementor_widgets');
+    
+    // Add custom categories
+    add_action('elementor/elements/categories_registered', 'viziblix_add_elementor_widget_categories');
+}
+add_action('init', 'viziblix_elementor_init');
+
+// Register Elementor Widget Categories
+function viziblix_add_elementor_widget_categories($elements_manager) {
+    $elements_manager->add_category(
+        'viziblix-widgets',
+        [
+            'title' => esc_html__('Viziblix Widgets', 'viziblix-enhanced'),
+            'icon' => 'fa fa-plug',
+        ]
+    );
+}
+
+// Register Custom Elementor Widgets
+function viziblix_register_elementor_widgets() {
+    \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Viziblix_Hero_Widget());
+    \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Viziblix_Services_Widget());
+    \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Viziblix_Pricing_Widget());
+    \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Viziblix_FAQ_Widget());
+    \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Viziblix_Contact_Widget());
+    \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Viziblix_Testimonials_Widget());
+}
 
 // Enqueue Scripts and Styles
 function viziblix_enhanced_scripts() {
@@ -60,6 +103,16 @@ function viziblix_enhanced_scripts() {
         array(), 
         null
     );
+    
+    // Elementor compatibility styles
+    if (class_exists('\Elementor\Plugin')) {
+        wp_enqueue_style(
+            'viziblix-elementor-styles',
+            get_template_directory_uri() . '/css/elementor-compatibility.css',
+            array('viziblix-enhanced-style'),
+            wp_get_theme()->get('Version')
+        );
+    }
     
     // Main theme JavaScript
     wp_enqueue_script(
@@ -81,21 +134,64 @@ function viziblix_enhanced_scripts() {
             'error' => __('Une erreur est survenue', 'viziblix-enhanced'),
         ),
     ));
-    
-    // Add async/defer attributes to scripts for performance
-    add_filter('script_loader_tag', 'viziblix_enhanced_script_attributes', 10, 3);
 }
 add_action('wp_enqueue_scripts', 'viziblix_enhanced_scripts');
 
-// Add async/defer attributes to scripts
-function viziblix_enhanced_script_attributes($tag, $handle, $src) {
-    $defer_scripts = array('viziblix-enhanced-script');
-    
-    if (in_array($handle, $defer_scripts)) {
-        return str_replace('<script ', '<script defer ', $tag);
+// Elementor Theme Builder Support
+function viziblix_elementor_theme_builder_support() {
+    if (!class_exists('\ElementorPro\Modules\ThemeBuilder\Module')) {
+        return;
     }
     
-    return $tag;
+    // Support for header/footer replacement
+    add_action('get_header', 'viziblix_elementor_get_header');
+    add_action('get_footer', 'viziblix_elementor_get_footer');
+}
+add_action('init', 'viziblix_elementor_theme_builder_support');
+
+// Handle Elementor Header Override
+function viziblix_elementor_get_header($name) {
+    if (!class_exists('\ElementorPro\Modules\ThemeBuilder\Module')) {
+        return;
+    }
+    
+    $header_id = \ElementorPro\Modules\ThemeBuilder\Module::instance()->get_conditions_manager()->get_documents_for_location('header');
+    if (!empty($header_id)) {
+        $header_id = array_keys($header_id)[0];
+        echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display($header_id);
+        $templates = [];
+        $name = (string) $name;
+        if ('' !== $name) {
+            $templates[] = "header-{$name}.php";
+        }
+        $templates[] = 'header.php';
+        remove_action('wp_head', '_wp_render_title_tag', 1);
+        ob_start();
+        locate_template($templates, true);
+        ob_get_clean();
+    }
+}
+
+// Handle Elementor Footer Override
+function viziblix_elementor_get_footer($name) {
+    if (!class_exists('\ElementorPro\Modules\ThemeBuilder\Module')) {
+        return;
+    }
+    
+    $footer_id = \ElementorPro\Modules\ThemeBuilder\Module::instance()->get_conditions_manager()->get_documents_for_location('footer');
+    if (!empty($footer_id)) {
+        $footer_id = array_keys($footer_id)[0];
+        echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display($footer_id);
+        $templates = [];
+        $name = (string) $name;
+        if ('' !== $name) {
+            $templates[] = "footer-{$name}.php";
+        }
+        $templates[] = 'footer.php';
+        ob_start();
+        locate_template($templates, true);
+        ob_get_clean();
+    }
 }
 
 // Fallback menu for when no menu is assigned
@@ -501,13 +597,25 @@ function viziblix_enhanced_options_page() {
     <?php
 }
 
+// Elementor Canvas Template Support
+function viziblix_elementor_canvas_page_template($page_template) {
+    if (class_exists('\Elementor\Plugin')) {
+        $elementor_canvas_page = get_post_meta(get_the_ID(), '_wp_page_template', true);
+        if ('elementor_canvas' === $elementor_canvas_page) {
+            $page_template = get_template_directory() . '/page-elementor-canvas.php';
+        }
+    }
+    return $page_template;
+}
+add_filter('page_template', 'viziblix_elementor_canvas_page_template');
+
 // Load text domain for translations
 function viziblix_enhanced_load_textdomain() {
     load_theme_textdomain('viziblix-enhanced', get_template_directory() . '/languages');
 }
 add_action('after_setup_theme', 'viziblix_enhanced_load_textdomain');
 
-// Add structured data for SEO
+// Structured data for SEO
 function viziblix_enhanced_structured_data() {
     if (is_front_page()) {
         $schema = array(
@@ -537,7 +645,7 @@ add_action('wp_head', 'viziblix_enhanced_structured_data');
 
 // Critical CSS inlining for performance
 function viziblix_enhanced_critical_css() {
-    if (is_front_page()) {
+    if (is_front_page() && !class_exists('\Elementor\Plugin')) {
         echo '<style id="critical-css">';
         echo 'body{font-family:Inter,sans-serif;margin:0;padding:0}';
         echo '.site-header{position:fixed;top:0;width:100%;background:#fff;z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,0.1)}';

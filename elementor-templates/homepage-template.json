@@ -1,0 +1,55 @@
+
+{
+  "version": "0.4",
+  "title": "Viziblix Homepage Template",
+  "type": "page",
+  "content": [
+    {
+      "id": "hero-section",
+      "elType": "section",
+      "settings": {
+        "layout": "boxed",
+        "background_background": "gradient",
+        "background_color": "#1e1e1e",
+        "background_color_stop": 0,
+        "background_color_b": "#2d2d2d",
+        "background_color_b_stop": 100,
+        "background_gradient_angle": 135
+      },
+      "elements": [
+        {
+          "id": "hero-widget",
+          "elType": "widget",
+          "widgetType": "viziblix-hero",
+          "settings": {
+            "title": "Transformez Votre Présence Digitale",
+            "subtitle": "Avec Viziblix Enhanced, Votre Agence Digitale de Confiance",
+            "description": "Nous aidons les entreprises à prospérer dans le monde numérique grâce à des stratégies sur mesure, des sites web performants et un marketing digital qui génère des résultats concrets.",
+            "primary_button_text": "Obtenez Votre Audit Gratuit",
+            "primary_button_link": {"url": "#audit-gratuit"},
+            "secondary_button_text": "Découvrir Nos Services",
+            "secondary_button_link": {"url": "#qui-aidons-nous"}
+          }
+        }
+      ]
+    },
+    {
+      "id": "services-section",
+      "elType": "section",
+      "settings": {
+        "layout": "boxed"
+      },
+      "elements": [
+        {
+          "id": "services-widget",
+          "elType": "widget",
+          "widgetType": "viziblix-services",
+          "settings": {
+            "section_title": "Qui Aidons-Nous ?",
+            "section_description": "Nous accompagnons différents types d'entreprises dans leur transformation digitale"
+          }
+        }
+      ]
+    }
+  ]
+}
